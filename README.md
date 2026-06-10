@@ -2,7 +2,7 @@
 
 Next.js 15 + Markdown SSG. 디자인: 시안 B (화이트+블루, 검사 성적서 무드)
 
-## 배포 방법 (Vercel)
+## 배포 방법 (Vercel)ok
 
 1. GitHub에 새 repo 생성 (예: actiongamyoun/dojangin) 후 이 폴더 전체 push
 2. Vercel → Add New Project → repo 선택 → 설정 변경 없이 Deploy
