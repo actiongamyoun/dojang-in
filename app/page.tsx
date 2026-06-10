@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
+import VisitorStats from "./components/VisitorStats";
+import ProfileSurvey from "./components/ProfileSurvey";
 
 export default function Home() {
   const guides = getAllPosts("guide");
@@ -21,6 +23,11 @@ export default function Home() {
             <Link href="/guide" className="ghost">실무 지식 보기</Link>
           </div>
         </div>
+      </div>
+
+      <div className="sec" style={{ paddingBottom: 0 }}>
+        <VisitorStats />
+        <ProfileSurvey />
       </div>
 
       <div className="quick">

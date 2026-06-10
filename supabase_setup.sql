@@ -29,3 +29,20 @@ create index if not exists idx_board_comments_post on board_comments (post_id, c
 
 alter table board_posts enable row level security;
 alter table board_comments enable row level security;
+
+-- 방문자 집계
+create table if not exists visits (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_visits_created on visits (created_at desc);
+alter table visits enable row level security;
+
+-- 익명 방문자 설문 (연령대·산업군)
+create table if not exists visitor_profiles (
+  id uuid primary key default gen_random_uuid(),
+  age_group text not null,
+  industry text not null,
+  created_at timestamptz not null default now()
+);
+alter table visitor_profiles enable row level security;

@@ -9,6 +9,7 @@ export type PostMeta = {
   category: string;
   date: string;
   description: string;
+  tags: string[];
 };
 
 function dirOf(kind: "guide" | "news") {
@@ -29,6 +30,7 @@ export function getAllPosts(kind: "guide" | "news" = "guide"): PostMeta[] {
       category: data.category as string,
       date: data.date as string,
       description: data.description as string,
+      tags: (data.tags as string[]) ?? [],
     };
   });
   return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -44,6 +46,7 @@ export function getPost(slug: string, kind: "guide" | "news" = "guide") {
     category: data.category as string,
     date: data.date as string,
     description: data.description as string,
+    tags: (data.tags as string[]) ?? [],
     html,
   };
 }
