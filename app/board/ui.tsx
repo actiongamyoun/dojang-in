@@ -26,21 +26,26 @@ export function PostForm() {
   }
 
   if (!open)
-    return <button className="cta" onClick={() => setOpen(true)} style={{ border: 0, cursor: "pointer" }}>글쓰기</button>;
+    return <button className="btn" onClick={() => setOpen(true)}>✏️ 글쓰기</button>;
 
   return (
     <form onSubmit={submit} className="board-form">
       <div className="form-row">
+        <select name="category" defaultValue="질문">
+          <option value="질문">질문</option>
+          <option value="정보">정보</option>
+          <option value="잡담">잡담</option>
+        </select>
         <input name="nickname" placeholder="닉네임" maxLength={20} required />
-        <input name="pin" placeholder="PIN 4자리 (삭제용)" inputMode="numeric" pattern="\d{4}" maxLength={4} required />
+        <input name="pin" placeholder="PIN 4자리" inputMode="numeric" pattern="\d{4}" maxLength={4} required />
       </div>
       <input name="title" placeholder="제목" maxLength={100} required />
-      <textarea name="content" placeholder="내용 (현장 질문, 잡담, 정보 공유 모두 환영)" rows={6} maxLength={5000} required />
+      <textarea name="content" placeholder="내용 (현장 질문, 정보 공유, 잡담 모두 환영)" rows={6} maxLength={5000} required />
       <input name="website" tabIndex={-1} autoComplete="off" style={{ position: "absolute", left: "-9999px" }} aria-hidden="true" />
       {msg && <p className="form-msg">{msg}</p>}
       <div className="form-row">
-        <button className="cta" disabled={busy} style={{ border: 0, cursor: "pointer" }}>{busy ? "등록 중…" : "등록"}</button>
-        <button type="button" className="cta ghost" onClick={() => setOpen(false)} style={{ cursor: "pointer" }}>취소</button>
+        <button className="btn" disabled={busy}>{busy ? "등록 중…" : "등록"}</button>
+        <button type="button" className="btn ghost" onClick={() => setOpen(false)}>취소</button>
       </div>
     </form>
   );
@@ -77,7 +82,7 @@ export function CommentForm({ postId }: { postId: string }) {
       <textarea name="content" placeholder="댓글 작성" rows={3} maxLength={2000} required />
       <input name="website" tabIndex={-1} autoComplete="off" style={{ position: "absolute", left: "-9999px" }} aria-hidden="true" />
       {msg && <p className="form-msg">{msg}</p>}
-      <button className="cta" disabled={busy} style={{ border: 0, cursor: "pointer", alignSelf: "flex-start" }}>{busy ? "등록 중…" : "댓글 등록"}</button>
+      <button className="btn" disabled={busy} style={{ alignSelf: "flex-start" }}>{busy ? "등록 중…" : "댓글 등록"}</button>
     </form>
   );
 }

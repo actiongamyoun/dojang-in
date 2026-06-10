@@ -5,6 +5,8 @@ import { CommentForm, DeleteButton } from "../ui";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const badgeOf: Record<string, string> = { 질문: "b-q", 정보: "b-tip", 잡담: "b-etc" };
+
 export default async function PostPage({
   params,
 }: {
@@ -16,7 +18,7 @@ export default async function PostPage({
 
   const { data: post } = await supabase
     .from("board_posts")
-    .select("id, nickname, title, content, created_at")
+    .select("id, nickname, title, content, category, created_at")
     .eq("id", id)
     .single();
   if (!post) notFound();
@@ -33,9 +35,10 @@ export default async function PostPage({
   return (
     <main>
       <article className="article">
-        <div className="container">
+        <div className="article-card">
           <header>
-            <h1 style={{ fontSize: 24 }}>{post.title}</h1>
+            <span className={`badge ${badgeOf[post.category] ?? "b-etc"}`}>{post.category}</span>
+            <h1 style={{ fontSize: 19 }}>{post.title}</h1>
             <div className="meta">
               {post.nickname} · {fmt(post.created_at)} <DeleteButton type="post" id={post.id} />
             </div>
@@ -44,20 +47,18 @@ export default async function PostPage({
             <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
           </div>
 
-          <div className="sec-head" style={{ marginTop: 40 }}>
-            <h2>댓글 {comments?.length ?? 0}</h2>
+          <div className="sec-h" style={{ marginTop: 28, borderTop: `1px solid var(--line)`, paddingTop: 16 }}>
+            <h2 style={{ fontSize: 15 }}>댓글 {comments?.length ?? 0}</h2>
           </div>
           {(comments ?? []).map((c) => (
             <div key={c.id} className="comment">
               <div className="comment-meta">
                 <b>{c.nickname}</b> · {fmt(c.created_at)} <DeleteButton type="comment" id={c.id} />
               </div>
-              <p style={{ whiteSpace: "pre-wrap", fontSize: 15 }}>{c.content}</p>
+              <p style={{ whiteSpace: "pre-wrap", fontSize: 14.5 }}>{c.content}</p>
             </div>
           ))}
-          <div style={{ marginTop: 20 }}>
-            <CommentForm postId={post.id} />
-          </div>
+          <CommentForm postId={post.id} />
         </div>
       </article>
     </main>

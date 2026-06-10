@@ -11,20 +11,17 @@ export default function NewsList() {
   const posts = getAllPosts("news");
   return (
     <main>
-      <section>
-        <div className="container">
-          <div className="sec-head">
-            <h2>새소식</h2>
-            <span>{posts.length} POSTS</span>
-          </div>
-          {posts.map((post) => (
-            <Link key={post.slug} href={`/news/${post.slug}`} className="row">
-              <b>{post.title}</b>
-              <span className="cat">{post.category} · {post.date}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <div className="sec">
+        <div className="sec-h"><h2>새소식</h2><span style={{ fontSize: 12, color: "var(--muted)" }}>{posts.length}건</span></div>
+        {posts.map((post) => (
+          <Link key={post.slug} href={`/news/${post.slug}`} className="post">
+            <span className="badge b-news">{post.category}</span>
+            <h3>{post.title}</h3>
+            <p>{post.description}</p>
+            <div className="meta"><span>{post.date}</span></div>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }

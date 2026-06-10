@@ -25,10 +25,11 @@ export default async function NewsPost({
   return (
     <main>
       <article className="article">
-        <div className="container">
+        <div className="article-card">
           <header>
+            <span className="badge b-news">{post.category}</span>
             <h1>{post.title}</h1>
-            <div className="meta">{post.category} · {post.date}</div>
+            <div className="meta">{post.date}</div>
           </header>
           <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
         </div>

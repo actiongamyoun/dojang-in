@@ -1,12 +1,13 @@
--- 도장인 익명 게시판 v1
+-- 도장인 익명 게시판 v2 (카테고리 포함)
 -- Supabase SQL Editor에서 실행하세요.
 -- user_id는 나중에 회원제 전환 시 auth.users와 연결할 자리입니다 (지금은 NULL).
 
 create table if not exists board_posts (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid,                      -- 회원제 전환 대비 (현재 미사용)
+  user_id uuid,
   nickname text not null,
-  pin_hash text not null,            -- SHA-256(PIN) — 삭제 인증용
+  pin_hash text not null,
+  category text not null default '잡담',   -- 질문 | 정보 | 잡담
   title text not null,
   content text not null,
   created_at timestamptz not null default now()
@@ -23,8 +24,8 @@ create table if not exists board_comments (
 );
 
 create index if not exists idx_board_posts_created on board_posts (created_at desc);
+create index if not exists idx_board_posts_cat on board_posts (category, created_at desc);
 create index if not exists idx_board_comments_post on board_comments (post_id, created_at);
 
--- RLS 활성화. anon 정책은 만들지 않음 → 모든 접근은 서버(service_role) 경유.
 alter table board_posts enable row level security;
 alter table board_comments enable row level security;

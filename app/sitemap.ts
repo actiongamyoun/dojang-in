@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://dojangin.vercel.app";
+  const base = "https://dojang-in.vercel.app";
   const posts = getAllPosts().map((p) => ({
     url: `${base}/guide/${p.slug}`,
     lastModified: p.date,
@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: base, lastModified: new Date() },
     { url: `${base}/guide`, lastModified: new Date() },
+    { url: `${base}/tools`, lastModified: new Date() },
     { url: `${base}/news`, lastModified: new Date() },
     { url: `${base}/cert`, lastModified: new Date() },
     { url: `${base}/board`, lastModified: new Date() },

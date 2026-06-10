@@ -10,8 +10,9 @@ export default function CertPage() {
   return (
     <main>
       <article className="article">
-        <div className="container">
+        <div className="article-card">
           <header>
+            <span className="badge b-notice">자격증</span>
             <h1>도장검사 국제 자격증 가이드</h1>
             <div className="meta">AMPP CIP · FROSIO</div>
           </header>

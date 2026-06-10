@@ -2,105 +2,57 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
 
 export default function Home() {
-  const posts = getAllPosts();
-  const news = getAllPosts("news").slice(0, 3);
+  const guides = getAllPosts("guide");
+  const news = getAllPosts("news");
+  const feed = [
+    ...guides.map((p) => ({ ...p, kind: "guide" as const })),
+    ...news.map((p) => ({ ...p, kind: "news" as const })),
+  ].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const weekly = guides.slice(0, 3);
 
   return (
     <main>
-      <div className="hero">
-        <div className="container">
-          <div className="rep-no">DOJANGIN · COATING INSPECTION HUB</div>
-          <h1>도장검사,<br /><u>기준</u>이 있는 곳</h1>
-          <p>
-            검사 도구 · 규격 해설 · 결함 사례. 조선소 도장 QC 실무 경험으로 만든
-            도장검사원의 허브입니다.
-          </p>
-          <div className="cta-row">
-            <a className="cta" href="#tools">도구 사용하기</a>
-            <Link className="cta ghost" href="/guide">실무 지식 보기</Link>
-          </div>
+      <div className="quick">
+        <Link href="/tools"><span className="ico q1">🧰</span>도구</Link>
+        <Link href="/guide"><span className="ico q2">📘</span>지식</Link>
+        <Link href="/news"><span className="ico q3">📰</span>새소식</Link>
+        <Link href="/board"><span className="ico q4">💬</span>소통</Link>
+      </div>
+
+      <div className="sec">
+        <div className="sec-h"><h2>이번 주 인기</h2><Link href="/guide">더보기 ›</Link></div>
+        <div className="hscroll">
+          {weekly.map((p) => (
+            <Link key={p.slug} href={`/guide/${p.slug}`} className="mini">
+              <span className="badge b-tip">{p.category}</span>
+              <b>{p.title}</b>
+              <p>{p.description}</p>
+              <div className="meta">{p.date}</div>
+            </Link>
+          ))}
         </div>
       </div>
 
-      <section id="tools">
-        <div className="container">
-          <div className="sec-head">
-            <h2>검사 도구</h2>
-            <span>FREE / NO SIGN-UP</span>
-          </div>
-          <div className="tools">
-            <a className="tool" href="https://humidity-dew.vercel.app" target="_blank" rel="noopener">
-              <div className="val">ΔT 3.2°C</div>
-              <b>이슬점 계산기</b>
-              <small>노점차 즉시 판정</small>
-            </a>
-            <a className="tool" href="https://paint-recoating-immersion.netlify.app" target="_blank" rel="noopener">
-              <div className="val">72h</div>
-              <b>재도장 간격 조회</b>
-              <small>6개 메이커 TDS 기반</small>
-            </a>
-            <span className="tool soon">
-              <div className="val">90/10</div>
-              <b>DFT 통계</b>
-              <small>준비 중</small>
+      <div className="sec">
+        <div className="sec-h"><h2>최신 글</h2><Link href="/guide">전체보기 ›</Link></div>
+        {feed.slice(0, 6).map((p) => (
+          <Link key={`${p.kind}-${p.slug}`} href={`/${p.kind}/${p.slug}`} className="post">
+            <span className={`badge ${p.kind === "news" ? "b-news" : "b-q"}`}>
+              {p.kind === "news" ? "새소식" : "지식"}
             </span>
-            <span className="tool soon">
-              <div className="val">418 L</div>
-              <b>도료 소요량</b>
-              <small>준비 중</small>
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <div className="container">
-          <div className="sec-head">
-            <h2>실무 지식</h2>
-            <span>UPDATED WEEKLY</span>
-          </div>
-          {posts.map((post) => (
-            <Link key={post.slug} href={`/guide/${post.slug}`} className="row">
-              <b>{post.title}</b>
-              <span className="cat">{post.category}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <div className="container">
-          <div className="sec-head">
-            <h2>새소식</h2>
-            <span>INDUSTRY NEWS</span>
-          </div>
-          {news.map((post) => (
-            <Link key={post.slug} href={`/news/${post.slug}`} className="row">
-              <b>{post.title}</b>
-              <span className="cat">{post.category}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <div className="container" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
-          <Link href="/board" className="soon-box" style={{ display: "flex" }}>
-            <div>
-              <b>소통 공간</b>
-              <p>현장 질문 · 정보 공유 · 잡담 — 익명으로 편하게</p>
-            </div>
-            <span className="pill">OPEN</span>
+            <h3>{p.title}</h3>
+            <p>{p.description}</p>
+            <div className="meta"><span>{p.category}</span><span>{p.date}</span></div>
           </Link>
-          <Link href="/cert" className="soon-box" style={{ display: "flex" }}>
-            <div>
-              <b>자격증 정보</b>
-              <p>AMPP CIP · FROSIO 레벨 체계와 응시 전략</p>
-            </div>
-            <span className="pill">GUIDE</span>
-          </Link>
-        </div>
-      </section>
+        ))}
+      </div>
+
+      <Link href="/cert" className="disc d2" style={{ marginBottom: 18 }}>
+        <b>자격증 가이드</b>
+        <small>AMPP CIP · FROSIO 레벨 체계와 응시 전략</small>
+      </Link>
+
+      <Link href="/board" className="fab">✏️ 글쓰기</Link>
     </main>
   );
 }
