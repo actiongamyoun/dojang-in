@@ -47,7 +47,7 @@ export default async function BoardPage({
 
   return (
     <main>
-      <div className="chips">
+      <div className="chips" style={{ maxWidth: 820 }}>
         {CATS.map((c) => (
           <Link
             key={c}
@@ -59,7 +59,7 @@ export default async function BoardPage({
         ))}
       </div>
 
-      <div className="sec">
+      <div className="sec board-wrap">
         <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 12 }}>
           현장 질문, 정보 공유, 잡담 모두 환영합니다. 닉네임과 PIN만으로 익명 작성됩니다.
         </p>

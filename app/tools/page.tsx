@@ -10,8 +10,10 @@ export default function ToolsPage() {
   return (
     <main>
       <div className="hero-band">
-        <h1>검사 도구</h1>
-        <p>현장에서 바로 쓰는 도장검사 유틸리티 — 전부 무료, 가입 불필요</p>
+        <div className="hb-in" style={{ padding: "30px 20px" }}>
+          <h1 style={{ fontSize: 26 }}>검사 도구</h1>
+          <p>현장에서 바로 쓰는 도장검사 유틸리티 — 전부 무료, 가입 불필요</p>
+        </div>
       </div>
 
       <div className="sec"><div className="sec-h"><h2>전체 도구</h2></div></div>
@@ -43,14 +45,16 @@ export default function ToolsPage() {
       </div>
 
       <div className="sec"><div className="sec-h"><h2>둘러보기</h2></div></div>
-      <Link href="/guide" className="disc d1">
-        <b>실무 지식</b>
-        <small>ISO 8501 · PSPC · 결함 사례 해설</small>
-      </Link>
-      <Link href="/cert" className="disc d2">
-        <b>자격증 가이드</b>
-        <small>AMPP CIP · FROSIO 비교와 응시 전략</small>
-      </Link>
+      <div className="disc-row">
+        <Link href="/guide" className="disc d1">
+          <b>실무 지식</b>
+          <small>ISO 8501 · PSPC · 결함 사례 해설</small>
+        </Link>
+        <Link href="/cert" className="disc d2">
+          <b>자격증 가이드</b>
+          <small>AMPP CIP · FROSIO 비교와 응시 전략</small>
+        </Link>
+      </div>
     </main>
   );
 }

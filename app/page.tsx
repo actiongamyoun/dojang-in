@@ -12,6 +12,17 @@ export default function Home() {
 
   return (
     <main>
+      <div className="hero-band">
+        <div className="hb-in">
+          <h1>도장검사, 기준이 있는 곳</h1>
+          <p>검사 도구 · 규격 해설 · 결함 사례 · 검사원 커뮤니티. 조선소 도장 QC 실무 경험으로 만든 도장검사원의 허브입니다.</p>
+          <div className="hero-cta">
+            <Link href="/tools">도구 사용하기</Link>
+            <Link href="/guide" className="ghost">실무 지식 보기</Link>
+          </div>
+        </div>
+      </div>
+
       <div className="quick">
         <Link href="/tools"><span className="ico q1">🧰</span>도구</Link>
         <Link href="/guide"><span className="ico q2">📘</span>지식</Link>
@@ -35,22 +46,30 @@ export default function Home() {
 
       <div className="sec">
         <div className="sec-h"><h2>최신 글</h2><Link href="/guide">전체보기 ›</Link></div>
-        {feed.slice(0, 6).map((p) => (
-          <Link key={`${p.kind}-${p.slug}`} href={`/${p.kind}/${p.slug}`} className="post">
-            <span className={`badge ${p.kind === "news" ? "b-news" : "b-q"}`}>
-              {p.kind === "news" ? "새소식" : "지식"}
-            </span>
-            <h3>{p.title}</h3>
-            <p>{p.description}</p>
-            <div className="meta"><span>{p.category}</span><span>{p.date}</span></div>
-          </Link>
-        ))}
+        <div className="feed">
+          {feed.slice(0, 6).map((p) => (
+            <Link key={`${p.kind}-${p.slug}`} href={`/${p.kind}/${p.slug}`} className="post">
+              <span className={`badge ${p.kind === "news" ? "b-news" : "b-q"}`}>
+                {p.kind === "news" ? "새소식" : "지식"}
+              </span>
+              <h3>{p.title}</h3>
+              <p>{p.description}</p>
+              <div className="meta"><span>{p.category}</span><span>{p.date}</span></div>
+            </Link>
+          ))}
+        </div>
       </div>
 
-      <Link href="/cert" className="disc d2" style={{ marginBottom: 18 }}>
-        <b>자격증 가이드</b>
-        <small>AMPP CIP · FROSIO 레벨 체계와 응시 전략</small>
-      </Link>
+      <div className="disc-row">
+        <Link href="/cert" className="disc d2">
+          <b>자격증 가이드</b>
+          <small>AMPP CIP · FROSIO 레벨 체계와 응시 전략</small>
+        </Link>
+        <Link href="/board" className="disc d1">
+          <b>소통 공간</b>
+          <small>현장 질문 · 정보 공유 — 익명으로 편하게</small>
+        </Link>
+      </div>
 
       <Link href="/board" className="fab">✏️ 글쓰기</Link>
     </main>

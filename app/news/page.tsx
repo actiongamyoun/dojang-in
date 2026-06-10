@@ -13,6 +13,7 @@ export default function NewsList() {
     <main>
       <div className="sec">
         <div className="sec-h"><h2>새소식</h2><span style={{ fontSize: 12, color: "var(--muted)" }}>{posts.length}건</span></div>
+        <div className="feed">
         {posts.map((post) => (
           <Link key={post.slug} href={`/news/${post.slug}`} className="post">
             <span className="badge b-news">{post.category}</span>
@@ -21,6 +22,7 @@ export default function NewsList() {
             <div className="meta"><span>{post.date}</span></div>
           </Link>
         ))}
+        </div>
       </div>
     </main>
   );

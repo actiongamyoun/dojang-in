@@ -13,6 +13,7 @@ export default function GuideList() {
     <main>
       <div className="sec">
         <div className="sec-h"><h2>실무 지식</h2><span style={{ fontSize: 12, color: "var(--muted)" }}>{posts.length}편</span></div>
+        <div className="feed">
         {posts.map((post) => (
           <Link key={post.slug} href={`/guide/${post.slug}`} className="post">
             <span className="badge b-tip">{post.category}</span>
@@ -21,6 +22,7 @@ export default function GuideList() {
             <div className="meta"><span>{post.date}</span></div>
           </Link>
         ))}
+        </div>
       </div>
     </main>
   );

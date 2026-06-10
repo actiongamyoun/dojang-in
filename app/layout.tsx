@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TabBar from "./components/TabBar";
+import TopNav from "./components/TopNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -37,15 +38,16 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div className="frame">
-          <header className="topbar">
+        <header className="topbar">
+          <div className="in">
             <Link href="/" className="logo">도장인</Link>
-          </header>
-          {children}
-          <footer className="site-footer">
-            도장인 — 조선소 도장검사 허브 · 도구는 모두 무료입니다
-          </footer>
-        </div>
+            <TopNav />
+          </div>
+        </header>
+        {children}
+        <footer className="site-footer">
+          도장인 — 조선소 도장검사 허브 · 도구는 모두 무료입니다
+        </footer>
         <TabBar />
       </body>
     </html>
