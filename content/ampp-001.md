@@ -1,5 +1,5 @@
 ---
-title: "# NACE(AMPP) CIP 도장검사원 자격증 종합 정리(2026)"
+title: "NACE(AMPP) CIP 도장검사원 자격증 종합 정리(2026)"
 category: "자격증·규격"
 tags: ["nace", "ampp", "도장 자격증"]
 date: "2026-06-11"
