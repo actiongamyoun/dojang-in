@@ -31,10 +31,10 @@ export default function Home() {
       </div>
 
       <div className="quick">
-        <Link href="/tools"><span className="ico q1">🧰</span>도구</Link>
-        <Link href="/guide"><span className="ico q2">📘</span>지식</Link>
-        <Link href="/news"><span className="ico q3">📰</span>새소식</Link>
-        <Link href="/board"><span className="ico q4">💬</span>소통</Link>
+        <Link href="/tools"><span className="ico q1 ms">construction</span>도구</Link>
+        <Link href="/guide"><span className="ico q2 ms">menu_book</span>지식</Link>
+        <Link href="/news"><span className="ico q3 ms">newspaper</span>새소식</Link>
+        <Link href="/board"><span className="ico q4 ms">forum</span>소통</Link>
       </div>
 
       <div className="sec">
@@ -78,7 +78,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <Link href="/board" className="fab">✏️ 글쓰기</Link>
+      <Link href="/board" className="fab"><span className="ms" aria-hidden>edit</span> 글쓰기</Link>
     </main>
   );
 }

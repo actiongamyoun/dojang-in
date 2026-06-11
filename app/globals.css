@@ -190,3 +190,67 @@ a { color: inherit; text-decoration: none; }
 .survey-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .survey-card .chip { cursor: pointer; font-family: inherit; }
 .survey-card .btn { align-self: flex-start; padding: 10px 26px; }
+
+
+/* ===== News page ===== */
+.notice-post { border-left: 4px solid #b45309; }
+.news-row { display: flex; gap: 14px; align-items: stretch; }
+.news-thumb {
+  flex-shrink: 0; width: 78px; border-radius: 12px;
+  background: linear-gradient(145deg, var(--blue), var(--blue-d));
+  color: #fff; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+}
+.news-thumb .nd { font-size: 17px; font-weight: 900; letter-spacing: .5px; }
+.news-thumb .ni { font-size: 17px; }
+.news-body { min-width: 0; }
+.news-body h3 { margin-top: 0; }
+
+/* 다이제스트 본문: 기사 링크 카드화 */
+.prose h3 { margin: 18px 0 6px; }
+.prose h3 a { color: var(--blue); }
+.prose h3 a::after { content: " ↗"; font-size: 13px; color: var(--muted); }
+
+
+/* ===== Material Symbols ===== */
+.ms {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal; font-style: normal;
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 1; letter-spacing: normal; text-transform: none;
+  white-space: nowrap; word-wrap: normal; direction: ltr;
+  -webkit-font-smoothing: antialiased; font-feature-settings: 'liga';
+  font-size: 22px;
+}
+.quick .ico.ms { font-size: 26px; color: var(--blue); }
+.q2.ms { color: var(--teal); } .q3.ms { color: #b45309; } .q4.ms { color: var(--red); }
+.app .aico.ms { font-size: 28px; color: var(--blue); }
+.a2.ms { color: var(--teal); } .a3.ms { color: #4f46e5; } .a4.ms { color: #b45309; }
+.news-thumb .ni.ms { font-size: 20px; color: #fff; }
+.topnav a { display: inline-flex; align-items: center; gap: 6px; }
+.topnav .ms { font-size: 20px; }
+.tabbar .ti.ms { font-size: 23px; margin: 0 auto 2px; height: 26px; }
+.tabbar a.on .ti.ms { width: 48px; }
+.fab .ms { font-size: 19px; color: #fff; }
+
+/* ===== Topbar right / Lang toggle ===== */
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--page); border: 1px solid var(--line); border-radius: 20px;
+  padding: 5px 12px; font-size: 12.5px; font-weight: 700; color: var(--muted);
+  cursor: pointer; font-family: inherit;
+}
+.lang-toggle .ms { font-size: 16px; color: var(--muted); }
+.lang-toggle i { font-style: normal; color: var(--line); }
+.lang-toggle .on { color: var(--blue); }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 100px; z-index: 50;
+  background: var(--ink); color: #fff; font-size: 13px; font-weight: 500;
+  padding: 11px 20px; border-radius: 24px; box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  animation: toast-in .25s ease;
+}
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (min-width: 768px) { .toast { bottom: 40px; } }

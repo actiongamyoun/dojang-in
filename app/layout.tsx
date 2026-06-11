@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import TabBar from "./components/TabBar";
 import TopNav from "./components/TopNav";
+import LangToggle from "./components/LangToggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,12 +37,19 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block"
+          rel="stylesheet"
+        />
       </head>
       <body>
         <header className="topbar">
           <div className="in">
             <Link href="/" className="logo">도장인</Link>
-            <TopNav />
+            <div className="topbar-right">
+              <TopNav />
+              <LangToggle />
+            </div>
           </div>
         </header>
         {children}

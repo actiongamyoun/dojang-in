@@ -17,7 +17,7 @@ export default function NewsList() {
     return (
       <div className="news-thumb">
         <span className="nd">{m}.{d}</span>
-        <span className="ni">📰</span>
+        <span className="ni ms">newspaper</span>
       </div>
     );
   };
