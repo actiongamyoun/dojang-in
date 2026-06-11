@@ -6,8 +6,6 @@ date: "2026-06-11"
 description: "frosio 자격증 정리"
 ---
 
-# FROSIO 도장검사원(Coating Inspector) 자격증 종합 정리
-
 > 작성일: 2026-06-11 | 최신 정보 출처: FROSIO 공식, KRISO 한국 교육기관(frosio.co.kr)
 
 ---
