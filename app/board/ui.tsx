@@ -87,6 +87,51 @@ export function CommentForm({ postId }: { postId: string }) {
   );
 }
 
+export function ViewTracker({ postId }: { postId: string }) {
+  const tracked = typeof window !== "undefined" && sessionStorage.getItem(`dj_v_${postId}`);
+  useState(() => {
+    if (typeof window !== "undefined" && !tracked) {
+      sessionStorage.setItem(`dj_v_${postId}`, "1");
+      fetch("/api/board/view", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: postId }),
+      }).catch(() => {});
+    }
+    return null;
+  });
+  return null;
+}
+
+export function LikeButton({ postId, initial }: { postId: string; initial: number }) {
+  const [likes, setLikes] = useState(initial);
+  const [done, setDone] = useState(false);
+
+  useState(() => {
+    if (typeof window !== "undefined" && localStorage.getItem(`dj_l_${postId}`)) setDone(true);
+    return null;
+  });
+
+  async function like() {
+    if (done) return;
+    setDone(true);
+    setLikes((n) => n + 1);
+    localStorage.setItem(`dj_l_${postId}`, "1");
+    await fetch("/api/board/like", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: postId }),
+    }).catch(() => {});
+  }
+
+  return (
+    <button onClick={like} className={`like-btn ${done ? "done" : ""}`}>
+      <span className="ms" aria-hidden>{done ? "favorite" : "favorite_border"}</span>
+      공감 {likes}
+    </button>
+  );
+}
+
 export function DeleteButton({ type, id }: { type: "post" | "comment"; id: string }) {
   const router = useRouter();
   async function del() {

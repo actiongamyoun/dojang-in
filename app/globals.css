@@ -258,3 +258,17 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== Prose images ===== */
 .prose img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); margin: 4px 0 14px; display: block; }
+
+
+/* ===== Board community ===== */
+.meta-ic { display: inline-flex; align-items: center; gap: 3px; }
+.meta-ic .ms { font-size: 14px; }
+.like-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; border: 1.5px solid var(--line); border-radius: 24px;
+  padding: 10px 22px; font-size: 14px; font-weight: 700; color: var(--ink);
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.like-btn .ms { font-size: 18px; color: var(--red); }
+.like-btn:hover { border-color: var(--red); }
+.like-btn.done { background: #fdeaea; border-color: var(--red); color: var(--red); cursor: default; }

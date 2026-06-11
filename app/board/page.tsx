@@ -25,7 +25,7 @@ export default async function BoardPage({
   const supabase = getServerSupabase();
   let posts: {
     id: string; nickname: string; title: string; content: string;
-    category: string; created_at: string; comment_count: number;
+    category: string; created_at: string; views: number; likes: number; comment_count: number;
   }[] = [];
   let notConfigured = false;
 
@@ -34,7 +34,7 @@ export default async function BoardPage({
   } else {
     let q = supabase
       .from("board_posts")
-      .select("id, nickname, title, content, category, created_at, board_comments(count)")
+      .select("id, nickname, title, content, category, created_at, views, likes, board_comments(count)")
       .order("created_at", { ascending: false })
       .limit(50);
     if (active !== "전체") q = q.eq("category", active);
@@ -81,6 +81,9 @@ export default async function BoardPage({
               <div className="meta">
                 <span>{p.nickname}</span>
                 <span>{new Date(p.created_at).toLocaleDateString("ko-KR", { timeZone: "Asia/Seoul", month: "2-digit", day: "2-digit" })}</span>
+                <span className="meta-ic"><i className="ms">visibility</i>{p.views}</span>
+                <span className="meta-ic"><i className="ms">chat_bubble</i>{p.comment_count}</span>
+                <span className="meta-ic"><i className="ms">favorite</i>{p.likes}</span>
               </div>
             </Link>
           ))}

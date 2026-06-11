@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getServerSupabase } from "@/lib/supabase";
-import { CommentForm, DeleteButton } from "../ui";
+import { CommentForm, DeleteButton, LikeButton, ViewTracker } from "../ui";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -18,7 +18,7 @@ export default async function PostPage({
 
   const { data: post } = await supabase
     .from("board_posts")
-    .select("id, nickname, title, content, category, created_at")
+    .select("id, nickname, title, content, category, created_at, views, likes")
     .eq("id", id)
     .single();
   if (!post) notFound();
@@ -43,8 +43,12 @@ export default async function PostPage({
               {post.nickname} · {fmt(post.created_at)} <DeleteButton type="post" id={post.id} />
             </div>
           </header>
+          <ViewTracker postId={post.id} />
           <div className="prose">
             <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", margin: "8px 0 4px" }}>
+            <LikeButton postId={post.id} initial={post.likes ?? 0} />
           </div>
 
           <div className="sec-h" style={{ marginTop: 28, borderTop: `1px solid var(--line)`, paddingTop: 16 }}>
