@@ -1,4 +1,6 @@
 import Link from "next/link";
+import fs from "fs";
+import path from "path";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +8,17 @@ export const metadata: Metadata = {
   description: "현장에서 바로 쓰는 도장검사 유틸리티 — 이슬점 계산기, 재도장 간격 조회. 전부 무료, 가입 불필요.",
 };
 
+type Tool = { name: string; desc: string; icon: string; color: string; url: string; status: "open" | "soon" };
+
+function getTools(): Tool[] {
+  const p = path.join(process.cwd(), "data", "tools.json");
+  if (!fs.existsSync(p)) return [];
+  return JSON.parse(fs.readFileSync(p, "utf-8"));
+}
+
 export default function ToolsPage() {
+  const tools = getTools();
+
   return (
     <main>
       <div className="hero-band">
@@ -18,30 +30,23 @@ export default function ToolsPage() {
 
       <div className="sec"><div className="sec-h"><h2>전체 도구</h2></div></div>
       <div className="appgrid">
-        <a className="app" href="https://humidity-dew.vercel.app" target="_blank" rel="noopener">
-          <span className="aico a1 ms">water_drop</span>
-          <b>이슬점 계산기</b>
-          <small>노점·ΔT3<br />도장 가능 판정</small>
-          <span className="open">OPEN</span>
-        </a>
-        <a className="app" href="https://paint-recoating-immersion.netlify.app" target="_blank" rel="noopener">
-          <span className="aico a2 ms">schedule</span>
-          <b>재도장 간격</b>
-          <small>6개 메이커<br />TDS 조회</small>
-          <span className="open">OPEN</span>
-        </a>
-        <span className="app" style={{ opacity: .65 }}>
-          <span className="aico a3 ms">straighten</span>
-          <b>DFT 통계</b>
-          <small>ISO 19840<br />90/10 자동 판정</small>
-          <span className="open dis">준비 중</span>
-        </span>
-        <span className="app" style={{ opacity: .65 }}>
-          <span className="aico a4 ms">format_paint</span>
-          <b>도료 소요량</b>
-          <small>면적·로스율<br />소요량 계산</small>
-          <span className="open dis">준비 중</span>
-        </span>
+        {tools.map((t) =>
+          t.status === "open" && t.url ? (
+            <a key={t.name} className="app" href={t.url} target="_blank" rel="noopener">
+              <span className={`aico ${t.color} ms`}>{t.icon}</span>
+              <b>{t.name}</b>
+              <small>{t.desc.split("|").map((l, i) => <span key={i}>{l}<br /></span>)}</small>
+              <span className="open">OPEN</span>
+            </a>
+          ) : (
+            <span key={t.name} className="app" style={{ opacity: .65 }}>
+              <span className={`aico ${t.color} ms`}>{t.icon}</span>
+              <b>{t.name}</b>
+              <small>{t.desc.split("|").map((l, i) => <span key={i}>{l}<br /></span>)}</small>
+              <span className="open dis">준비 중</span>
+            </span>
+          )
+        )}
       </div>
 
       <div className="sec"><div className="sec-h"><h2>둘러보기</h2></div></div>

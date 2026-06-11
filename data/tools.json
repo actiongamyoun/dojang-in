@@ -1,0 +1,34 @@
+[
+  {
+    "name": "이슬점 계산기",
+    "desc": "노점·ΔT3|도장 가능 판정",
+    "icon": "water_drop",
+    "color": "a1",
+    "url": "https://humidity-dew.vercel.app",
+    "status": "open"
+  },
+  {
+    "name": "재도장 간격",
+    "desc": "6개 메이커|TDS 조회",
+    "icon": "schedule",
+    "color": "a2",
+    "url": "https://paint-recoating-immersion.netlify.app",
+    "status": "open"
+  },
+  {
+    "name": "DFT 통계",
+    "desc": "ISO 19840|90/10 자동 판정",
+    "icon": "straighten",
+    "color": "a3",
+    "url": "",
+    "status": "soon"
+  },
+  {
+    "name": "도료 소요량",
+    "desc": "면적·로스율|소요량 계산",
+    "icon": "format_paint",
+    "color": "a4",
+    "url": "",
+    "status": "soon"
+  }
+]
