@@ -51,6 +51,51 @@ export default function AdminPage() {
     }
   }, [authed, tab, tools.length]);
 
+  const [uploading, setUploading] = useState(false);
+
+  async function uploadPhoto(file: File) {
+    setUploading(true); setMsg("");
+    try {
+      // 1) 캔버스 압축 (최대 1600px, JPEG 0.82)
+      const img = await new Promise<HTMLImageElement>((res, rej) => {
+        const i = new Image();
+        i.onload = () => res(i);
+        i.onerror = rej;
+        i.src = URL.createObjectURL(file);
+      });
+      const MAX = 1600;
+      const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise<Blob>((res) =>
+        canvas.toBlob((b) => res(b!), "image/jpeg", 0.82)
+      );
+
+      // 2) Cloudinary 업로드 (unsigned preset)
+      const CLOUD = "dmb7hu1en";
+      const PRESET = "dojangin_photos";
+      const fd = new FormData();
+      fd.append("file", blob, "photo.jpg");
+      fd.append("upload_preset", PRESET);
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {
+        method: "POST",
+        body: fd,
+      });
+      if (!res.ok) throw new Error("Cloudinary 업로드 실패 — preset(dojangin_photos) 생성 여부 확인");
+      const data = await res.json();
+
+      // 3) 본문에 마크다운 삽입
+      setContent((prev) => prev + (prev.endsWith("\n") || prev === "" ? "" : "\n\n") + `![사진 설명](${data.secure_url})\n`);
+      setMsg(`📷 사진 업로드 완료 (${Math.round(blob.size / 1024)}KB) — 본문에 삽입됨, "사진 설명"을 수정하세요`);
+    } catch (e: any) {
+      setMsg(`❌ ${e.message}`);
+    } finally {
+      setUploading(false);
+    }
+  }
+
   async function loadPost(key: string) {
     if (!key) return;
     const [k, sg] = key.split("::");
@@ -171,7 +216,14 @@ export default function AdminPage() {
             <input placeholder="태그 — 쉼표 구분 (예: ISO 4624, 부착력)" value={tags} onChange={(e) => setTags(e.target.value)} />
             <input placeholder="설명 — 목록·검색에 노출되는 1~2문장" value={description} onChange={(e) => setDescription(e.target.value)} />
             <textarea placeholder={"본문 — 마크다운 사용 가능\n## 소제목\n**굵게**, 표, 목록, [링크](주소)"} rows={16} value={content} onChange={(e) => setContent(e.target.value)} />
-            <button className="btn" onClick={publish} disabled={busy}>{busy ? "발행 중…" : "발행하기"}</button>
+            <div className="form-row">
+              <label className="btn ghost" style={{ textAlign: "center", cursor: "pointer" }}>
+                {uploading ? "업로드 중…" : "📷 사진 추가 (자동 압축)"}
+                <input type="file" accept="image/*" style={{ display: "none" }} disabled={uploading}
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadPhoto(f); e.target.value = ""; }} />
+              </label>
+              <button className="btn" onClick={publish} disabled={busy || uploading}>{busy ? "발행 중…" : "발행하기"}</button>
+            </div>
             <small style={{ color: "var(--muted)", fontSize: 12 }}>
               발행 = GitHub 자동 커밋 → Vercel 재배포 (1~2분 소요). 같은 slug로 발행하면 기존 글이 수정됩니다.
             </small>

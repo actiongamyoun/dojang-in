@@ -254,3 +254,7 @@ a { color: inherit; text-decoration: none; }
 }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (min-width: 768px) { .toast { bottom: 40px; } }
+
+
+/* ===== Prose images ===== */
+.prose img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); margin: 4px 0 14px; display: block; }
