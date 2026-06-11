@@ -25,10 +25,22 @@ export default function AdminPage() {
   // 도구 관리
   const [tools, setTools] = useState<Tool[]>([]);
 
+  // 기존 글 목록 (수정용)
+  const [postList, setPostList] = useState<{ slug: string; title: string; kind: string }[]>([]);
+
   useEffect(() => {
     const saved = sessionStorage.getItem("dj_admin_pw");
     if (saved) { setPw(saved); setAuthed(true); }
   }, []);
+
+  useEffect(() => {
+    if (authed && postList.length === 0) {
+      fetch("/api/admin/load")
+        .then((r) => r.json())
+        .then((d) => setPostList(d.list ?? []))
+        .catch(() => {});
+    }
+  }, [authed, postList.length]);
 
   useEffect(() => {
     if (authed && tab === "tools" && tools.length === 0) {
@@ -38,6 +50,19 @@ export default function AdminPage() {
         .catch(() => {});
     }
   }, [authed, tab, tools.length]);
+
+  async function loadPost(key: string) {
+    if (!key) return;
+    const [k, sg] = key.split("::");
+    const res = await fetch(`/api/admin/load?kind=${k}&slug=${sg}`);
+    if (!res.ok) { setMsg("❌ 글을 불러오지 못했습니다"); return; }
+    const d = await res.json();
+    setKind(d.kind === "notice" ? "notice" : "guide");
+    setSlug(d.slug); setTitle(d.title);
+    if (CATS.includes(d.category)) setCategory(d.category);
+    setTags(d.tags); setDescription(d.description); setContent(d.content);
+    setMsg(`📂 "${d.title}" 불러옴 — 수정 후 발행하면 덮어쓰기됩니다`);
+  }
 
   function login() {
     if (!pw.trim()) return;
@@ -122,6 +147,14 @@ export default function AdminPage() {
 
         {tab === "post" && (
           <div className="board-form">
+            <select defaultValue="" onChange={(e) => { loadPost(e.target.value); e.target.value = ""; }}>
+              <option value="">✏️ 새 글 작성 — 또는 기존 글 선택해서 수정</option>
+              {postList.map((p) => (
+                <option key={`${p.kind}::${p.slug}`} value={`${p.kind}::${p.slug}`}>
+                  [{p.kind === "notice" ? "공지" : "지식"}] {p.title}
+                </option>
+              ))}
+            </select>
             <div className="form-row">
               <select value={kind} onChange={(e) => setKind(e.target.value as any)}>
                 <option value="guide">지식 글</option>
