@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   description: "조선소 도장검사 실무 가이드 — 표면처리, 도장작업, 측정·검사, 결함·보수, 자격증·규격",
 };
 
-const CATS = ["전체", "표면처리", "도장작업", "측정·검사", "결함·보수", "자격증·규격"] as const;
+const CATS = ["전체", "표면처리", "도장작업", "도료", "측정·검사", "결함·보수", "자격증·규격"] as const;
 const badgeOf: Record<string, string> = {
-  표면처리: "b-tip", 도장작업: "b-q", "측정·검사": "b-news",
+  표면처리: "b-tip", 도장작업: "b-q", 도료: "b-paint", "측정·검사": "b-news",
   "결함·보수": "b-hot", "자격증·규격": "b-notice",
 };
 

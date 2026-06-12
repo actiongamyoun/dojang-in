@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const CATS = ["표면처리", "도장작업", "측정·검사", "결함·보수", "자격증·규격"];
+const CATS = ["표면처리", "도장작업", "도료", "측정·검사", "결함·보수", "자격증·규격"];
 
 type Tool = { name: string; desc: string; icon: string; color: string; url: string; status: "open" | "soon" };
 
