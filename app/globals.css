@@ -281,3 +281,10 @@ a { color: inherit; text-decoration: none; }
 .logo-link img { border-radius: 8px; display: block; }
 .logo-text { font-weight: 900; font-size: 20px; letter-spacing: 1px; color: var(--blue); }
 @media (max-width: 380px) { .logo-text { display: none; } }
+
+
+/* ===== Admin AI box ===== */
+.ai-box { background: linear-gradient(135deg, #eef4fc, #e6f7f5); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+.ai-box .ms { font-size: 18px; color: var(--blue); }
+.ai-check { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink); white-space: nowrap; padding: 0 6px; }
+.ai-check input { width: auto; }

@@ -96,6 +96,51 @@ export default function AdminPage() {
     }
   }
 
+  const [analyzing, setAnalyzing] = useState(false);
+  const [aType, setAType] = useState("defect");
+  const [aHint, setAHint] = useState("");
+  const [aSearch, setASearch] = useState(false);
+
+  async function fileToBase64(file: File): Promise<{ data: string; mediaType: string }> {
+    // 압축 후 base64 (Vision 비용·속도 위해 최대 1280px)
+    const img = await new Promise<HTMLImageElement>((res, rej) => {
+      const i = new Image(); i.onload = () => res(i); i.onerror = rej;
+      i.src = URL.createObjectURL(file);
+    });
+    const MAX = 1280;
+    const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+    c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
+    const dataUrl = c.toDataURL("image/jpeg", 0.85);
+    return { data: dataUrl.split(",")[1], mediaType: "image/jpeg" };
+  }
+
+  async function analyzePhoto(file: File) {
+    setAnalyzing(true); setMsg("");
+    try {
+      const { data, mediaType } = await fileToBase64(file);
+      const res = await fetch("/api/admin/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw, imageBase64: data, mediaType, type: aType, hint: aHint, useSearch: aSearch }),
+      });
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.error);
+      setKind("guide");
+      if (d.title) setTitle(d.title);
+      if (d.category && CATS.includes(d.category)) setCategory(d.category);
+      if (d.tags?.length) setTags(d.tags.join(", "));
+      if (d.description) setDescription(d.description);
+      if (d.content) setContent(d.content);
+      setMsg("🤖 AI 초안 생성 완료 — 내용을 검수·수정한 뒤 발행하세요. slug는 직접 입력하세요.");
+    } catch (e: any) {
+      setMsg(`❌ ${e.message}`);
+    } finally {
+      setAnalyzing(false);
+    }
+  }
+
   async function loadPost(key: string) {
     if (!key) return;
     const [k, sg] = key.split("::");
@@ -200,6 +245,30 @@ export default function AdminPage() {
                 </option>
               ))}
             </select>
+            <div className="ai-box">
+              <b style={{ fontSize: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                <span className="ms" aria-hidden>auto_awesome</span> AI 사진 분석 — 사진 올리면 초안 자동 작성
+              </b>
+              <div className="form-row">
+                <select value={aType} onChange={(e) => setAType(e.target.value)}>
+                  <option value="defect">결함 진단</option>
+                  <option value="measure">측정·장비</option>
+                  <option value="paint">도료</option>
+                  <option value="general">범용 (알아서 판단)</option>
+                  <option value="news">사진 + 최신 뉴스 검색</option>
+                </select>
+                <label className="ai-check">
+                  <input type="checkbox" checked={aSearch} onChange={(e) => setASearch(e.target.checked)} />
+                  웹검색 포함
+                </label>
+              </div>
+              <input placeholder="(선택) 메모 — 사진 보충 설명: 예) 발라스트 탱크 내부, 도장 3일 후" value={aHint} onChange={(e) => setAHint(e.target.value)} />
+              <label className="btn" style={{ textAlign: "center", cursor: analyzing ? "default" : "pointer", opacity: analyzing ? .6 : 1 }}>
+                {analyzing ? "AI 분석 중… (최대 1분)" : "📷 사진 선택해서 분석"}
+                <input type="file" accept="image/*" style={{ display: "none" }} disabled={analyzing}
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) analyzePhoto(f); e.target.value = ""; }} />
+              </label>
+            </div>
             <div className="form-row">
               <select value={kind} onChange={(e) => setKind(e.target.value as any)}>
                 <option value="guide">지식 글</option>
