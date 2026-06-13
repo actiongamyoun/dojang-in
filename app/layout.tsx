@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import TabBar from "./components/TabBar";
 import TopNav from "./components/TopNav";
 import LangToggle from "./components/LangToggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.png",
+    apple: "/apple-touch-icon.png",
+  },
   metadataBase: new URL("https://dojang-in.vercel.app"),
   title: {
     default: "도장인 — 조선소 도장검사 허브",
@@ -45,7 +50,10 @@ export default function RootLayout({
       <body>
         <header className="topbar">
           <div className="in">
-            <Link href="/" className="logo">도장인</Link>
+            <Link href="/" className="logo-link" aria-label="도장인 홈">
+              <Image src="/images/logo.png" alt="도장인" width={38} height={38} priority />
+              <span className="logo-text">도장인</span>
+            </Link>
             <div className="topbar-right">
               <TopNav />
               <LangToggle />
