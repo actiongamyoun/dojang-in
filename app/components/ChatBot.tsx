@@ -25,6 +25,39 @@ export default function ChatBot() {
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+
+  // 스크롤 속도에 따라 FAB가 미세하게 기울고 흔들림 (3D 부유감)
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let raf = 0;
+    let tilt = 0;
+    function onScroll() {
+      const y = window.scrollY;
+      const dv = Math.max(-14, Math.min(14, y - lastY)); // 스크롤 변화량
+      lastY = y;
+      tilt = dv;
+      if (!raf) raf = requestAnimationFrame(apply);
+    }
+    function apply() {
+      raf = 0;
+      const el = fabRef.current;
+      if (el) {
+        el.style.setProperty("--tiltX", `${(-tilt * 1.1).toFixed(1)}deg`);
+        el.style.setProperty("--shiftY", `${(tilt * 0.5).toFixed(1)}px`);
+      }
+      // 관성 감쇠로 천천히 0으로 복귀
+      if (Math.abs(tilt) > 0.2) {
+        tilt *= 0.82;
+        raf = requestAnimationFrame(apply);
+      } else if (fabRef.current) {
+        fabRef.current.style.setProperty("--tiltX", "0deg");
+        fabRef.current.style.setProperty("--shiftY", "0px");
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+  }, []);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
@@ -55,7 +88,7 @@ export default function ChatBot() {
 
   return (
     <>
-      <button className="chat-fab" onClick={() => setOpen((o) => !o)} aria-label="AI 챗봇 열기">
+      <button ref={fabRef} className="chat-fab" onClick={() => setOpen((o) => !o)} aria-label="AI 챗봇 열기">
         <span className="ms" aria-hidden>{open ? "close" : "smart_toy"}</span>
       </button>
 

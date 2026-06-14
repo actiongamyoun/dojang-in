@@ -78,7 +78,6 @@ export default function Home() {
         </Link>
       </div>
 
-      <Link href="/board" className="fab"><span className="ms" aria-hidden>edit</span> 글쓰기</Link>
     </main>
   );
 }
