@@ -293,10 +293,15 @@ a { color: inherit; text-decoration: none; }
 /* ===== ChatBot ===== */
 .chat-fab {
   position: fixed; right: 18px; bottom: 96px; z-index: 40;
-  width: 56px; height: 56px; border-radius: 50%; border: 0; cursor: pointer;
-  background: linear-gradient(135deg, var(--blue), var(--blue-d)); color: #fff;
-  box-shadow: 0 6px 18px rgba(13,91,168,.4);
+  width: 58px; height: 58px; border-radius: 50%; border: 0; cursor: pointer;
+  background: linear-gradient(135deg, #ff5fa2, #c026a8); color: #fff;
   display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px rgba(217,38,168,.45);
+  animation: chat-glow 2.4s ease-in-out infinite;
+}
+@keyframes chat-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,95,162,.55), 0 6px 18px rgba(217,38,168,.45); }
+  50% { box-shadow: 0 0 0 8px rgba(255,95,162,0), 0 6px 22px rgba(217,38,168,.6); }
 }
 .chat-fab .ms { font-size: 27px; }
 @media (min-width: 768px) { .chat-fab { bottom: 28px; right: 28px; } }
@@ -304,12 +309,18 @@ a { color: inherit; text-decoration: none; }
 .chat-panel {
   position: fixed; right: 18px; bottom: 162px; z-index: 40;
   width: min(380px, calc(100vw - 36px)); height: min(540px, calc(100vh - 200px));
-  background: #fff; border: 1px solid var(--line); border-radius: 18px;
+  background: #fff; border-radius: 18px;
   box-shadow: 0 12px 40px rgba(0,0,0,.18); display: flex; flex-direction: column; overflow: hidden;
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #ff5fa2, #7c3aed, #ff5fa2);
+  background-origin: border-box; background-clip: padding-box, border-box;
+  background-size: 100% 100%, 300% 300%;
+  animation: chat-border 4s ease infinite;
 }
+@keyframes chat-border { 0%, 100% { background-position: 0 0, 0% 50%; } 50% { background-position: 0 0, 100% 50%; } }
 @media (min-width: 768px) { .chat-panel { bottom: 96px; right: 28px; } }
 
-.chat-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, var(--blue), var(--blue-d)); color: #fff; }
+.chat-head { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, #ff5fa2, #c026a8); color: #fff; }
 .chat-head .ms { font-size: 24px; }
 .chat-head b { font-size: 15px; display: block; }
 .chat-head small { font-size: 11.5px; opacity: .85; }
@@ -319,8 +330,8 @@ a { color: inherit; text-decoration: none; }
 .chat-msg.user { justify-content: flex-end; }
 .chat-msg .bubble { max-width: 82%; padding: 10px 13px; border-radius: 14px; font-size: 14px; line-height: 1.6; }
 .chat-msg.assistant .bubble { background: #fff; border: 1px solid var(--line); border-top-left-radius: 4px; }
-.chat-msg.user .bubble { background: var(--blue); color: #fff; border-top-right-radius: 4px; }
-.chat-link { color: var(--blue); font-weight: 700; text-decoration: underline; }
+.chat-msg.user .bubble { background: linear-gradient(135deg, #ff5fa2, #c026a8); color: #fff; border-top-right-radius: 4px; }
+.chat-link { color: #c026a8; font-weight: 700; text-decoration: underline; }
 .chat-msg.user .chat-link { color: #fff; }
 
 .bubble.typing { display: flex; gap: 4px; }
@@ -331,8 +342,8 @@ a { color: inherit; text-decoration: none; }
 
 .chat-input { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); background: #fff; }
 .chat-input input { flex: 1; font-family: inherit; font-size: 14px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 22px; outline: none; }
-.chat-input input:focus { border-color: var(--blue); }
-.chat-input button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--blue); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.chat-input input:focus { border-color: #ff5fa2; }
+.chat-input button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: linear-gradient(135deg, #ff5fa2, #c026a8); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .chat-input button:disabled { background: var(--line); cursor: default; }
 .chat-input button .ms { font-size: 19px; }
 .chat-foot { font-size: 10.5px; color: var(--muted); text-align: center; padding: 0 12px 10px; background: #fff; }
