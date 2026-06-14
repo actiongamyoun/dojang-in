@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import TabBar from "./components/TabBar";
 import TopNav from "./components/TopNav";
+import ChatBot from "./components/ChatBot";
 import LangToggle from "./components/LangToggle";
 import "./globals.css";
 
@@ -65,6 +66,7 @@ export default function RootLayout({
           도장인 — 조선소 도장검사 허브 · 도구는 모두 무료입니다
         </footer>
         <TabBar />
+        <ChatBot />
       </body>
     </html>
   );
