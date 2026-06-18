@@ -72,7 +72,11 @@ export default function Home() {
           <b>자격증 가이드</b>
           <small>AMPP CIP · FROSIO 레벨 체계와 응시 전략</small>
         </Link>
-        <Link href="/board" className="disc d1">
+        <Link href="/jobs" className="disc d1">
+          <b>구인·구직</b>
+          <small>조선소 도장검사 채용·일자리 정보</small>
+        </Link>
+        <Link href="/board" className="disc d3">
           <b>소통 공간</b>
           <small>현장 질문 · 정보 공유 — 익명으로 편하게</small>
         </Link>

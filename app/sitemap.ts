@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/news`, lastModified: new Date() },
     { url: `${base}/cert`, lastModified: new Date() },
     { url: `${base}/board`, lastModified: new Date() },
+    { url: `${base}/jobs`, lastModified: new Date() },
     ...posts,
     ...news,
   ];

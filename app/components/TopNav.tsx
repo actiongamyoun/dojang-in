@@ -8,6 +8,7 @@ const items = [
   { href: "/guide", icon: "menu_book", label: "지식" },
   { href: "/tools", icon: "construction", label: "도구" },
   { href: "/cert", icon: "workspace_premium", label: "자격증" },
+  { href: "/jobs", icon: "work", label: "구인구직" },
   { href: "/board", icon: "forum", label: "소통" },
 ];
 

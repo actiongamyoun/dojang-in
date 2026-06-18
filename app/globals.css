@@ -368,3 +368,11 @@ a { color: inherit; text-decoration: none; }
 .chat-input button:disabled { background: var(--line); cursor: default; }
 .chat-input button .ms { font-size: 19px; }
 .chat-foot { font-size: 10.5px; color: var(--muted); text-align: center; padding: 0 12px 10px; background: #fff; }
+
+
+/* ===== Jobs ===== */
+.contact-box { display: flex; align-items: center; gap: 12px; margin-top: 18px; background: var(--blue-l); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.contact-box .ms { font-size: 24px; color: var(--blue); }
+.contact-box small { display: block; font-size: 11.5px; color: var(--muted); }
+.contact-box b { font-size: 16px; color: var(--ink); word-break: break-all; }
+.disc.d3 { background: linear-gradient(135deg, #7c3aed, #4f46e5); }
