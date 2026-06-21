@@ -4,6 +4,7 @@ import Image from "next/image";
 import TabBar from "./components/TabBar";
 import TopNav from "./components/TopNav";
 import ChatBot from "./components/ChatBot";
+import MobileMenu from "./components/MobileMenu";
 import LangToggle from "./components/LangToggle";
 import "./globals.css";
 
@@ -51,10 +52,13 @@ export default function RootLayout({
       <body>
         <header className="topbar">
           <div className="in">
-            <Link href="/" className="logo-link" aria-label="도장인 홈">
-              <Image src="/images/logo.png" alt="도장인" width={38} height={38} priority />
-              <span className="logo-text">도장인</span>
-            </Link>
+            <div className="topbar-left">
+              <MobileMenu />
+              <Link href="/" className="logo-link" aria-label="도장인 홈">
+                <Image src="/images/logo.png" alt="도장인" width={38} height={38} priority />
+                <span className="logo-text">도장인</span>
+              </Link>
+            </div>
             <div className="topbar-right">
               <TopNav />
               <LangToggle />
