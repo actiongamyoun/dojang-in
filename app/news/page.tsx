@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
-import Subscribe from "@/app/components/Subscribe";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -25,7 +24,6 @@ export default function NewsList() {
 
   return (
     <main>
-      <div className="sec" style={{ paddingBottom: 0 }}><Subscribe /></div>
       {notices.length > 0 && (
         <div className="sec">
           <div className="sec-h"><h2>공지</h2></div>
